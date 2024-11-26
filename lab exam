@@ -1,0 +1,201 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPnaso6Uuj1QpStwgtdA3n+",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/2303a51857/AIML/blob/main/lab%20exam\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# Assuming your data is in a file called 'your_data.csv'\n",
+        "data = pd.read_csv('/content/online+shoppers+purchasing+intention+dataset.zip')\n",
+        "\n",
+        "# Filter data where purchase occurred\n",
+        "purchased_data = data[data['Revenue'] == True]\n",
+        "\n",
+        "# Analyze most viewed (ProductRelated) pages among purchases\n",
+        "most_viewed_products = purchased_data['ProductRelated'].sum()\n",
+        "\n",
+        "# Analyze average PageValues (indicates product popularity)\n",
+        "avg_page_value = purchased_data['PageValues'].mean()\n",
+        "\n",
+        "print(\"Most viewed product-related pages:\", most_viewed_products)\n",
+        "print(\"Average PageValue of purchased products:\", avg_page_value)"
+      ],
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4F8McMjUy81G",
+        "outputId": "5e3665bb-6be0-4337-ae97-b565ad794391"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Most viewed product-related pages: 91985\n",
+            "Average PageValue of purchased products: 27.264518194696016\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Group by SpecialDay and count purchases\n",
+        "special_days_purchases = purchased_data.groupby('SpecialDay')['Revenue'].count().sort_values(ascending=False)\n",
+        "\n",
+        "print(\"Purchases on special days:\\n\", special_days_purchases)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "OLIQSDokzHmA",
+        "outputId": "247f7916-4b9c-4d8a-a284-ddfd8ea5d1e2"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Purchases on special days:\n",
+            " SpecialDay\n",
+            "0.0    1831\n",
+            "0.6      29\n",
+            "0.2      14\n",
+            "0.4      13\n",
+            "0.8      11\n",
+            "1.0      10\n",
+            "Name: Revenue, dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Group by VisitorType and count purchases\n",
+        "visitor_type_purchases = purchased_data.groupby('VisitorType')['Revenue'].count()\n",
+        "\n",
+        "print(\"Purchases by visitor type:\\n\", visitor_type_purchases)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "apYZITlozNoP",
+        "outputId": "382efac2-6734-4008-c0cb-f5b9b1ac6a50"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Purchases by visitor type:\n",
+            " VisitorType\n",
+            "New_Visitor           422\n",
+            "Other                  16\n",
+            "Returning_Visitor    1470\n",
+            "Name: Revenue, dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Group by Month and count purchases\n",
+        "month_purchases = purchased_data.groupby('Month')['Revenue'].count().sort_values(ascending=False)\n",
+        "\n",
+        "print(\"Purchases by month:\\n\", month_purchases)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "_bYblz7BzRxV",
+        "outputId": "a0f5c0a1-0753-4d0c-a6e9-266a3c35a3c2"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Purchases by month:\n",
+            " Month\n",
+            "Nov     760\n",
+            "May     365\n",
+            "Dec     216\n",
+            "Mar     192\n",
+            "Oct     115\n",
+            "Sep      86\n",
+            "Aug      76\n",
+            "Jul      66\n",
+            "June     29\n",
+            "Feb       3\n",
+            "Name: Revenue, dtype: int64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Maximum and Minimum PageValues (proxy for revenue generated per session)\n",
+        "max_revenue = data['PageValues'].max()\n",
+        "min_revenue = data['PageValues'].min()\n",
+        "\n",
+        "print(\"Maximum revenue generated:\", max_revenue)\n",
+        "print(\"Minimum revenue generated:\", min_revenue)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "XZzIFyF8zV1H",
+        "outputId": "46b5b8e1-8247-44c9-8808-0744da45157d"
+      },
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Maximum revenue generated: 361.7637419\n",
+            "Minimum revenue generated: 0.0\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
